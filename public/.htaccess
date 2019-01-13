@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME}%  !-d
+RewriteCond %{REQUEST_FILENAME}%  !-f
+
+RewriteCond %{REQUEST_URI}%  "/admin"
+
+RewriteRule ^(.*)$ $1                                              [L]
+
+# Do not route static files in the public directory
+RewriteRule \.(js|css|svg|gif|jpg|jpeg|png)$ -                 [L]
+
+# Route everything else to index.php in the public directory
+RewriteRule ^(.*)$                index.php?=$1 [QSA,L]
