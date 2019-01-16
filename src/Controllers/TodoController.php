@@ -72,7 +72,14 @@ class TodoController extends Controller {
 
     public function clear()
     {
-      // (OPTIONAL) TODO: This action should remove all completed todos from the table.
-    }
+        $result = TodoItem::clearCompletedTodos();
 
+        if ($result) {
+            $this->redirect('/');
+        }
+
+        else {
+            throw new Exception("Could not delete completed items.");
+        }
+    }
 }

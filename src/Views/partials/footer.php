@@ -1,6 +1,8 @@
 <footer class="footer">
     <span class="todo-count"><?= count(array_filter($todos, function($todo) { return $todo['completed'] === "false"; })) ?> item<?= "".count($todos) !== 1 ? "s" : "" ?> left</span>
-    <button class="clear-completed">Clear completed</button>
+    <form method="post" action="todos/clear-completed">
+        <button type="submit" class="clear-completed">Clear completed</button>
+    </form>
 </footer>
 
 </main>
