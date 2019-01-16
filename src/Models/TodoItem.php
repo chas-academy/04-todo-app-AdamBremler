@@ -6,11 +6,18 @@ class TodoItem extends Model
 {
     const TABLENAME = 'todos'; // This is used by the abstract model, don't touch
 
-    // public static function createTodo($title)
-    // {
-    //     // TODO: Implement me!
-    //     // Create a new todo
-    // }
+    public static function createTodo($title)
+    {
+        try {
+            $query = "INSERT INTO " . static::TABLENAME . " (title, created, completed) VALUES (:title, NOW(), 'false')";
+            self::$db->query($query);
+            self::$db->bind(':title', $title);
+            return self::$db->execute();
+
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
+    }
 
     // // public static function updateTodo($todoId, $title, $completed = null)
     // // {
