@@ -19,11 +19,20 @@ class TodoItem extends Model
         }
     }
 
-    // // public static function updateTodo($todoId, $title, $completed = null)
-    // // {
-    // //     // TODO: Implement me!
-    // //     // Update a specific todo
-    // // }
+    public static function updateTodo($todoId, $title, $completed = null)
+    {
+        try {
+            $query = "UPDATE " . static::TABLENAME . " SET title = :title, completed = :completed WHERE id = :id";
+            self::$db->query($query);
+            self::$db->bind(':title', $title);
+            self::$db->bind(':completed', $completed);
+            self::$db->bind(':id', $todoId);
+            return self::$db->execute();
+
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
+    }
 
     public static function deleteTodo($todoId)
     {
