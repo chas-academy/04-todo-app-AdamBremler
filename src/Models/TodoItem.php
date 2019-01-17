@@ -47,12 +47,17 @@ class TodoItem extends Model
         }
     }
     
-    // (Optional bonus methods below)
-    // public static function toggleTodos($completed)
-    // {
-    //     // TODO: Implement me!
-    //     // This is to toggle all todos either as completed or not completed
-    // }
+    public static function toggleTodos()
+    {
+        try {
+            $query = "UPDATE " . static::TABLENAME . " SET completed = IF(completed = 'true', 'false', 'true')";
+            self::$db->query($query);
+            return self::$db->execute();
+
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
+    }
 
     public static function clearCompletedTodos()
     {

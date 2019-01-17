@@ -67,7 +67,15 @@ class TodoController extends Controller {
      */
     public function toggle()
     {
-      // (OPTIONAL) TODO: This action should toggle all todos to completed, or not completed.
+        $result = TodoItem::toggleTodos();
+
+        if ($result) {
+            $this->redirect('/');
+        }
+
+        else {
+            throw new Exception("Could not toggle items.");
+        }
     }
 
     public function clear()
