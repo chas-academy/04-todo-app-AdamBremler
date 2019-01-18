@@ -12,6 +12,24 @@ class TodoController extends Controller {
         return $this->view('index', ['todos' => $todos]);
     }
 
+    public function filtered($urlParams)
+    {
+        $mode = $urlParams['mode'];
+        switch ($mode) {
+            case 0:
+                $todos = TodoItem::findUncompleted();
+                break;
+            case 1:
+                $todos = TodoItem::findCompleted();
+                break;
+            case 2:
+                $this->redirect('/');
+                return;
+        }
+
+        return $this->view('index', ['todos' => $todos, 'filter' => $mode + 1]);
+    }
+
     public function add()
     {
         $body = filter_body(); 

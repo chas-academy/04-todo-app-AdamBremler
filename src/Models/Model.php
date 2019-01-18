@@ -29,10 +29,11 @@ abstract class Model
      * Generic model method for selecting everything from a model class
      * that inhertis this abstract model
      */
-    public static function findAll($orderBy = "created", $descending = true)
+    public static function findAll($orderBy = "created", $descending = true, $whereQuery = "")
     {
         try {
-            $query = "SELECT * FROM " . static::TABLENAME . " ORDER BY " . $orderBy . ($descending ? " DESC" : "");
+            $query = "SELECT * FROM " . static::TABLENAME . " " . $whereQuery . " ORDER BY " . $orderBy . ($descending ? " DESC" : "");
+
             self::$db->query($query);
             $results = self::$db->resultset();
 

@@ -112,4 +112,16 @@ class TodoItem extends Model
             return $err->getMessage();
         }
     }
+
+    public static function findUncompleted() {
+        $whereQuery = "WHERE completed = 'false'";
+        
+        return self::findAll('list_order', false, $whereQuery);
+    }
+
+    public static function findCompleted() {
+        $whereQuery = "WHERE completed = 'true'";
+        
+        return self::findAll('list_order', false, $whereQuery);
+    }
 }
