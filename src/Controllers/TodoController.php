@@ -8,7 +8,7 @@ class TodoController extends Controller {
     
     public function get()
     {
-        $todos = TodoItem::findAll();
+        $todos = TodoItem::findAll('list_order', false);
         return $this->view('index', ['todos' => $todos]);
     }
 
@@ -31,9 +31,10 @@ class TodoController extends Controller {
         $body = filter_body(); // gives you the body of the request (the "envelope" contents)
         $todoId = $urlParams['id']; // the id of the todo we're trying to update
         $todoTitle = $body['title'];
+        $move = !empty($body['move']) ? $body['move'] : false;
         $completed = isset($body['status']) ? 'true' : 'false'; // whether or not the todo has been checked or not
 
-        $result = TodoItem::updateTodo($todoId, $todoTitle, $completed);
+        $result = TodoItem::updateTodo($todoId, $todoTitle, $move, $completed);
 
         if ($result) {
             $this->redirect('/');
