@@ -9,6 +9,7 @@ class TodoController extends Controller {
     public function get()
     {
         $todos = TodoItem::findAll('list_order', false);
+
         return $this->view('index', ['todos' => $todos]);
     }
 
@@ -22,12 +23,20 @@ class TodoController extends Controller {
             case 1:
                 $todos = TodoItem::findCompleted();
                 break;
-            case 2:
+            default:
                 $this->redirect('/');
                 return;
         }
 
         return $this->view('index', ['todos' => $todos, 'filter' => $mode + 1]);
+    }
+
+    public function search() {
+        $searchTerm = $_GET['q'];
+
+        $todos = TodoItem::findByTitleLike($searchTerm);
+
+        return $this->view('index', ['todos' => $todos]);
     }
 
     public function add()
@@ -78,12 +87,6 @@ class TodoController extends Controller {
         }
     }
 
-    /**
-     * OPTIONAL Bonus round!
-     * 
-     * The two methods below are optional, feel free to try and complete them
-     * if you're aiming for a higher grade.
-     */
     public function toggle()
     {
         $result = TodoItem::toggleTodos();

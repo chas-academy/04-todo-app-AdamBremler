@@ -10,7 +10,7 @@
 
 <footer class="site-footer">
     <div class="small-container">
-        <p class="text-center">Made by <a href="">Adam Bremler</a></p>
+        <p class="text-center">Made by <a href="/">Adam Bremler</a></p>
     </div>
 </footer>
 

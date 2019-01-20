@@ -113,15 +113,44 @@ class TodoItem extends Model
         }
     }
 
-    public static function findUncompleted() {
-        $whereQuery = "WHERE completed = 'false'";
-        
-        return self::findAll('list_order', false, $whereQuery);
+    public static function findUncompleted()
+    {
+        try {
+            $whereQuery = "WHERE completed = 'false'";
+            
+            return self::findAll('list_order', false, $whereQuery);
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
     }
 
-    public static function findCompleted() {
-        $whereQuery = "WHERE completed = 'true'";
-        
-        return self::findAll('list_order', false, $whereQuery);
+    public static function findCompleted()
+    {
+        try {
+            $whereQuery = "WHERE completed = 'true'";
+            
+            return self::findAll('list_order', false, $whereQuery);
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
+    }
+
+    public static function findByTitleLike($keyword)
+    {
+        try {
+            $query = "SELECT * FROM " . static::TABLENAME . " WHERE title LIKE CONCAT('%', :keyword, '%')";
+
+            self::$db->query($query);
+            self::$db->bind(':keyword', $keyword);
+            $results = self::$db->resultset();
+
+            if (!empty($results)) {
+                return $results;
+            } else {
+                return [];
+            }
+        } catch (PDOException $err) {
+            return $err->getMessage();
+        }
     }
 }
