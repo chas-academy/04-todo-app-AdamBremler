@@ -32,6 +32,10 @@ class TodoController extends Controller {
     }
 
     public function search() {
+        if (empty($_GET['q'])) {
+            return $this->redirect('/');
+        }
+
         $searchTerm = $_GET['q'];
 
         $todos = TodoItem::findByTitleLike($searchTerm);
