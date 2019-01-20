@@ -138,7 +138,7 @@ class TodoItem extends Model
     public static function findByTitleLike($keyword)
     {
         try {
-            $query = "SELECT * FROM " . static::TABLENAME . " WHERE title LIKE CONCAT('%', :keyword, '%')";
+            $query = "SELECT * FROM " . static::TABLENAME . " WHERE title LIKE CONCAT('%', :keyword, '%') ORDER BY list_order";
 
             self::$db->query($query);
             self::$db->bind(':keyword', $keyword);
